@@ -4,7 +4,7 @@ A simple browser-based Duck Hunt clone built with HTML, CSS, and JavaScript.
 
 ## Features
 
-- 🦆 Animated flapping ducks
+- Flying ducks (possibly animated)
 - Score tracking
 - timer
 - Ducks spawn faster after each miss
