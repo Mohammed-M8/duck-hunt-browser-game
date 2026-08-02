@@ -2,6 +2,12 @@
 
 A simple browser-based Duck Hunt clone built with HTML, CSS, and JavaScript.
 
+## User Stories
+* As a User, i want to shoot ducks
+* As a User, i want to be challenged by a timer
+* As a User, i want to be challenged by bird movement
+* As a User, i want a win condition i need to acheieve
+
 ## Features
 
 - Flying ducks (possibly animated)
@@ -12,9 +18,9 @@ A simple browser-based Duck Hunt clone built with HTML, CSS, and JavaScript.
 
 ## Technologies
 
-- HTML5
-- CSS3
-- JavaScript (ES6)
+- HTML
+- CSS
+- JavaScript
 
 ## How to Play
 
