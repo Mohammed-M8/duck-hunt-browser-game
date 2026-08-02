@@ -1,15 +1,77 @@
 @import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
 
+* {
+    font-family: "Schoolbell", cursive;
+
+}
+
 body {
     box-sizing: border-box;
     margin: 0 auto;
-    font-family: "Schoolbell", cursive;
+
+}
+
+.crosshair {
+    height: 10vh;
+    width: 10vw;
+    position: absolute;
+    pointer-events: none;
+    z-index: 10000;
 }
 
 .overlay {
     width: 100vw;
     height: 100vh;
-    background-color: aqua;
+    background:url("/assets/Home.png");
+    background-position:top;
+    background-repeat:repeat;
+    background-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    animation: scrollBack 8s linear infinite;
+}
+
+@keyframes scrollBack {
+
+    to{
+        background-position-x:0px ;
+    }
+    from{
+       background-position: -1000px;
+    }
+    
+}
+
+
+.overlay>*{
+    margin: 0px;
+}
+
+.overlay>h1{
+    font-size: 70px;
+}
+
+.overlay>h2{
+    font-size: 40px;
+}
+
+.overlay>button {
+    background: #000000;
+    color: white;
+    border: 0px;
+    border-radius: 10px;
+    height: 10vh;
+    width: 40vw;
+    font-size: 5vw;
+    cursor: pointer;
+
+}
+
+
+.hidden {
     display: none;
 }
 
@@ -18,7 +80,7 @@ body {
     height: 100vh;
     background-color: blue;
     border: 5px solid black;
-    font-size:20px;
+    font-size: 20px;
 
 }
 
@@ -31,10 +93,15 @@ body {
 }
 
 .game {
+    position: relative;
     width: 100vw;
     height: 80vh;
     background: url("/assets/BG.png");
     border: 2px solid black;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
 }
 
@@ -45,7 +112,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
+
+
 
 .bullets {
     width: 15vw;
@@ -60,4 +130,31 @@ body {
 .target {
     width: 25vw;
     border: 2px solid black;
+}
+
+.bird {
+    width: 5vw;
+    height: 5vw;
+    pointer-events: none;
+}
+
+.birdBox {
+    position: absolute;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    width: 8vw;
+    height: 8vw;
+    cursor: pointer;
+}
+
+.shot {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2000;
+    height: 6vh;
+    width: 6vw;
+    transform: translate(-50%, -50%);
+
+
 }
