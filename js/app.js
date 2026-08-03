@@ -126,7 +126,7 @@ const shot = (e) => {
     const birdBox = e.currentTarget;
     const birdImg = birdBox.querySelector(".bird");
 
-    birdImg.src = "/assets/duckEnemy-4.png";
+    birdImg.src = "/assets/duckEnemy-3.png";
 
     game.score++;
     render()

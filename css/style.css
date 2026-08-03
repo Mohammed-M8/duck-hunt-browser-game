@@ -82,7 +82,7 @@ body {
 .stats {
     width: 100vw;
     height: 20vh;
-    background: url("/assets/statBoard.jpg");
+    background: url("/assets/statBoard.png");
     display: flex;
     justify-content: space-between;
 }
