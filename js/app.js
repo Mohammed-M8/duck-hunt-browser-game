@@ -17,7 +17,7 @@ const game = {
     score: 0,
     speed: 10,
     birds: [],
-    bullets: 10,
+    bullets: 20,
     isPlaying: false,
     win: undefined,
     gap: 2000,

@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Honk:MORF@15&family=Pixelify+Sans:wght@400..700&family=Schoolbell&display=swap');
 
-* {
-    font-family: "Schoolbell", cursive;
+body {
+    font-family: "SchoolBell", cursive;
 
 }
 
@@ -53,6 +53,8 @@ body {
 }
 
 .overlay>button {
+    font-family: "SchoolBell", cursive;
+
     background: #000000;
     color: white;
     border: 0px;
@@ -70,6 +72,7 @@ body {
 }
 
 .UI {
+
     width: 100vw;
     height: 100vh;
     background-color: blue;
@@ -79,11 +82,16 @@ body {
 }
 
 .stats {
+    font-family: "Honk", sans-serif;
     width: 100vw;
     height: 20vh;
     background: url("/assets/statBoard.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     justify-content: space-between;
+    border-bottom: none;
 }
 
 .game {
@@ -92,6 +100,7 @@ body {
     height: 80vh;
     background: url("/assets/BG.png");
     border: 2px solid black;
+    border-top: none;
     overflow: hidden;
     background-size: cover;
     background-position: center;
