@@ -11,51 +11,46 @@ body {
 
 }
 
-.crosshair {
-    height: 10vh;
-    width: 10vw;
-    position: absolute;
-    pointer-events: none;
-    z-index: 10000;
-}
+
 
 .overlay {
     width: 100vw;
     height: 100vh;
-    background:url("/assets/Home.png");
-    background-position:top;
-    background-repeat:repeat;
+    background: url("/assets/Home.png");
+    background-position: top;
+    background-repeat: repeat;
     background-size: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 
-    animation: scrollBack 8s linear infinite;
+    animation: scrollBack 20s linear infinite;
 }
 
 @keyframes scrollBack {
 
-    to{
-        background-position-x:0px ;
+    to {
+        background-position-x: 0px;
     }
-    from{
-       background-position: -1000px;
+
+    from {
+        background-position-x: -1000px;
     }
-    
+
 }
 
 
-.overlay>*{
+.overlay>* {
     margin: 0px;
 }
 
-.overlay>h1{
-    font-size: 70px;
+.overlay>h1 {
+    font-size: 10vw;
 }
 
-.overlay>h2{
-    font-size: 40px;
+.overlay>h2 {
+    font-size: 5.71vw;
 }
 
 .overlay>button {
@@ -64,8 +59,8 @@ body {
     border: 0px;
     border-radius: 10px;
     height: 10vh;
-    width: 40vw;
-    font-size: 5vw;
+    width: 30vw;
+    font-size: 2.8vw;
     cursor: pointer;
 
 }
@@ -87,7 +82,7 @@ body {
 .stats {
     width: 100vw;
     height: 20vh;
-    background-color: rgb(138, 148, 199);
+    background: url("/assets/statBoard.jpg");
     display: flex;
     justify-content: space-between;
 }
@@ -113,23 +108,22 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    font-size: 3vw;
 }
 
 
 
 .bullets {
     width: 15vw;
-    border: 2px solid black;
+
 }
 
 .timer {
     width: 60vw;
-    border: 2px solid black;
 }
 
 .target {
     width: 25vw;
-    border: 2px solid black;
 }
 
 .bird {

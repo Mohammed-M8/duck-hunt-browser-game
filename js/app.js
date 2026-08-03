@@ -1,3 +1,7 @@
+
+
+/*---------- Variables (state) ---------*/
+let renderId, createId, flapId;
 /*-------------- Constants -------------*/
 
 
@@ -22,35 +26,24 @@ const game = {
 
         UIElement.classList.remove("hidden")
         overlayElement.classList.add("hidden")
-        this.timer = 120000
-        this.targetScore = 2
+        this.timer = 60000
+        this.targetScore = 10
         this.score = 0
+        this.speed = 20
         this.birds = []
         this.element.replaceChildren()
         this.bullets = 10
         this.isPlaying = true
         console.log("game started")
-        render();
 
-        setInterval(() => createBird(), this.gap)
 
-        setInterval(() => {
-            this.timer -= 1000;
-            render();
+        createId = setInterval(createBird, this.gap)
 
-            if (this.timer <= 0) {
-                end()
-            }
-        }, 1000)
+        renderId = setInterval(renderTimer, 1000)
 
     }
-
-
 }
 
-
-
-/*---------- Variables (state) ---------*/
 
 
 /*----- Cached Element References  -----*/
@@ -64,13 +57,22 @@ const UIElement = document.querySelector(".UI")
 const playBtn = document.querySelector(".play")
 const resultSpan = document.querySelector("#result")
 /*-------------- Functions -------------*/
+
+const renderTimer = () => {
+    game.timer -= 1000;
+    render();
+
+    if (game.timer <= 0) {
+        end()
+    }
+}
 const createBird = () => {
     const bird = {
-        x: 480,
-        y: Math.random() * 280,
+        x: game.element.clientWidth,
+        y: Math.random() * (game.element.clientHeight - 90),
         element: document.createElement('div'),
         child: document.createElement('img'),
-        speed: 10,
+        speed: 2,
         state: 1,
         flap() {
             if (this.state === 1) {
@@ -100,10 +102,14 @@ const createBird = () => {
 
 
 
-    setInterval(() => {
+    bird.interval = setInterval(() => {
         bird.flap()
         bird.x -= game.speed;
         bird.element.style.left = bird.x + "px"
+        if (bird.x < -window.innerWidth) {
+            clearInterval(bird.interval)
+            bird.element.remove()
+        }
     }, 180)
 
 
@@ -113,6 +119,8 @@ const createBird = () => {
 const shot = (e) => {
     e.stopPropagation();
     game.bullets--;
+    game.speed += 10
+
 
 
     const birdBox = e.currentTarget;
@@ -129,7 +137,7 @@ const shot = (e) => {
         birdBox.remove();
     }, 200);
 
-    if (game.bullets <= 0) {
+    if (game.bullets === 0) {
         game.isPlaying = false
         end()
     }
@@ -150,7 +158,9 @@ const end = () => {
     game.isPlaying = false
     overlayElement.classList.remove("hidden")
     UIElement.classList.add("hidden")
-
+    clearInterval(renderId)
+    clearInterval(createId)
+    game.birds.forEach((b) => clearInterval(b.interval))
 }
 
 
@@ -159,12 +169,12 @@ const end = () => {
 
 /*----------- Event Listeners ----------*/
 game.element.addEventListener('click', (e) => {
-    if (game.bullets === 0) end()
     game.speed += 1
     shotSmoke = document.createElement('img')
     shotSmoke.src = "/assets/shot.png"
     shotSmoke.classList.add("shot")
     game.bullets--;
+    if (game.bullets === 0) end()
 
     shotSmoke.style.left = `${e.offsetX}px`;
     shotSmoke.style.top = `${e.offsetY}px`;
