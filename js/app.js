@@ -119,7 +119,7 @@ const createBird = () => {
 const shot = (e) => {
     e.stopPropagation();
     game.bullets--;
-    game.speed += 10
+    game.speed += 1
 
 
 

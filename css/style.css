@@ -25,20 +25,19 @@ body {
     align-items: center;
     flex-direction: column;
 
-    animation: scrollBack 20s linear infinite;
+    animation: scrollBack 10s linear infinite;
 }
 
 @keyframes scrollBack {
+    from {
+        background-position: 0px 0px;
+    }
 
     to {
-        background-position-x: 0px;
+        background-position: 1000px -1000px;
     }
-
-    from {
-        background-position-x: -1000px;
-    }
-
 }
+
 
 
 .overlay>* {
@@ -126,6 +125,13 @@ body {
     width: 25vw;
 }
 
+.bird,
+.birdBox {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
+
 .bird {
     width: 5vw;
     height: 5vw;
@@ -140,6 +146,8 @@ body {
     width: 8vw;
     height: 8vw;
     cursor: pointer;
+
+
 }
 
 .shot {
