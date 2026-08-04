@@ -82,7 +82,9 @@ body {
 }
 
 .stats {
-    font-family: "Honk", sans-serif;
+    font-family: "Pixelify Sans", sans-serif;
+    color: white;
+    font-weight: 700;
     width: 100vw;
     height: 20vh;
     background: url("/assets/statBoard.png");

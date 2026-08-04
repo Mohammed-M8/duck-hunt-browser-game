@@ -58,6 +58,21 @@ const playBtn = document.querySelector(".play")
 const resultSpan = document.querySelector("#result")
 /*-------------- Functions -------------*/
 
+const getRandom = (items) => {
+    let total = items.reduce((sum, item) => {
+        return sum + item.weight
+    }, 0)
+
+    let roll = Math.random() * total;
+    for (const item of items) {
+        if (roll < item.weight) return item
+
+        roll -= item.weight
+    }
+}
+
+
+
 const renderTimer = () => {
     game.timer -= 1000;
     render();
@@ -67,6 +82,11 @@ const renderTimer = () => {
     }
 }
 const createBird = () => {
+    types = [
+        { name: "duck", flap1: "/assets/duckEnemy-1.png", flap2: "/assets/duckEnemy-2.png", weight: 70 },
+        { name: "crow", flap1: "/assets/crowChill-1.png", flap2: "/assets/crowChill-2.png", penalty: 2000, weight: 20 },
+        { name: "eagle", flap1: "/assets/eagleChill-1.png", flap2: "/assets/eagleChill-2.png", penalty: 10000, weight: 10 },
+    ]
     const bird = {
         x: game.element.clientWidth,
         y: Math.random() * (game.element.clientHeight - 90),
@@ -74,19 +94,22 @@ const createBird = () => {
         child: document.createElement('img'),
         speed: 2,
         state: 1,
+        type: getRandom(types),
         flap() {
             if (this.state === 1) {
                 this.state = 2
-                this.child.src = "/assets/duckEnemy-2.png"
+                this.child.src = this.type.flap1
             }
             else {
                 this.state = 1
-                this.child.src = "/assets/duckEnemy-1.png"
+                this.child.src = this.type.flap2
             }
         }
 
     }
-    bird.child.src = "/assets/duckEnemy-1.png"
+    bird.element.bird = bird
+    console.log(bird.type.name)
+    bird.child.src = bird.flap1
     bird.child.classList.add("bird")
 
     bird.element.classList.add("birdBox")
@@ -127,9 +150,17 @@ const shot = (e) => {
     const birdImg = birdBox.querySelector(".bird");
 
     birdImg.src = "/assets/duckEnemy-3.png";
+    const bird = birdBox.bird
+    if (bird.type.name !== "duck") {
+        const pen = bird.type.penalty
+        game.timer -= pen
+        timeSpan.textContent += ` - ${pen / 1000}s`
 
-    game.score++;
-    render()
+    }
+    else {
+        game.score++;
+    }
+    setTimeout(render, 500)
     if (game.score === game.targetScore) end()
     console.log(game.score);
 
