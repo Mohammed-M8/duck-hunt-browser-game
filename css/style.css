@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Honk:MORF@15&family=Pixelify+Sans:wght@400..700&family=Schoolbell&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
 body {
     font-family: "SchoolBell", cursive;
 
 }
 
-body {
+* {
     box-sizing: border-box;
+}
+
+body {
     margin: 0 auto;
 
 }
@@ -15,6 +19,7 @@ body {
 
 .overlay {
     width: 100vw;
+    color: white;
     height: 100vh;
     background: url("/assets/Home.png");
     background-position: top;
@@ -24,7 +29,6 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
     animation: scrollBack 10s linear infinite;
 }
 
@@ -66,6 +70,56 @@ body {
 
 }
 
+.info h1,
+.info h2 {
+    margin: 0;
+}
+
+.info {
+    width: 100vw;
+    height: 100vh;
+
+    background-color: aquamarine;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info>div {
+    background-color: rgb(249, 249, 156);
+    padding: 0px 20px 0px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    box-shadow: 2px 2px 2px 2px black;
+    gap: 20px;
+}
+
+.start {
+    font-family: "SchoolBell", cursive;
+
+    background: #000000;
+    color: white;
+    border: 0px;
+    border-radius: 10px;
+    height: 10vh;
+    width: 30vw;
+    font-size: 2.8vw;
+    cursor: pointer;
+}
+
+.image {
+    height: 10vh;
+    width: 10vh;
+}
+
+
+
 
 .hidden {
     display: none;
@@ -82,7 +136,7 @@ body {
 }
 
 .stats {
-    font-family: "Pixelify Sans", sans-serif;
+    font-family: "Special Elite", system-ui;
     color: white;
     font-weight: 700;
     width: 100vw;
@@ -147,6 +201,9 @@ body {
     width: 5vw;
     height: 5vw;
     pointer-events: none;
+}
+.bird:hover{
+    cursor: pointer;
 }
 
 .birdBox {

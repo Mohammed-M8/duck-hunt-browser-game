@@ -1,12 +1,12 @@
 
 
 /*---------- Variables (state) ---------*/
-let renderId, createId, flapId;
+let renderId, createId, flapId, speedId;
 /*-------------- Constants -------------*/
 
 
 const render = () => {
-    remainSpan.textContent = game.bullets
+    remainSpan.textContent = game.lives
     timeSpan.textContent = `${game.timer / 1000}s left`
     scoreSpan.textContent = `${game.score}/${game.targetScore}`
 
@@ -15,28 +15,32 @@ const game = {
     timer: 0,
     targetScore: 0,
     score: 0,
-    speed: 10,
     birds: [],
-    bullets: 20,
-    isPlaying: false,
+    lives: 10,
+    played: false,
     win: undefined,
     gap: 2000,
+    speed: 0,
+    penalty: 10000,
     element: document.querySelector(".game"),
     start() {
-
+        if (this.played) {
+            overlayElement.classList.add("hidden")
+        }
         UIElement.classList.remove("hidden")
-        overlayElement.classList.add("hidden")
+        infoElement.classList.add("hidden")
         this.timer = 60000
-        this.targetScore = 10
+        this.targetScore = 20
         this.score = 0
-        this.speed = 20
+        this.speed = 0
         this.birds = []
         this.element.replaceChildren()
-        this.bullets = 10
-        this.isPlaying = true
+        this.lives = 10
+        this.played = true
         console.log("game started")
+        render();
 
-
+        speedId = setInterval(faster, 5000)
         createId = setInterval(createBird, this.gap)
 
         renderId = setInterval(renderTimer, 1000)
@@ -55,8 +59,17 @@ const overlayElement = document.querySelector(".overlay")
 
 const UIElement = document.querySelector(".UI")
 const playBtn = document.querySelector(".play")
+const startBtn = document.querySelector(".start")
 const resultSpan = document.querySelector("#result")
+
+const infoElement = document.querySelector(".info")
 /*-------------- Functions -------------*/
+
+const openInfo = () => {
+    overlayElement.classList.add("hidden")
+    infoElement.classList.remove("hidden")
+
+}
 
 const getRandom = (items) => {
     let total = items.reduce((sum, item) => {
@@ -82,10 +95,10 @@ const renderTimer = () => {
     }
 }
 const createBird = () => {
-    types = [
-        { name: "duck", flap1: "/assets/duckEnemy-1.png", flap2: "/assets/duckEnemy-2.png", weight: 70 },
-        { name: "crow", flap1: "/assets/crowChill-1.png", flap2: "/assets/crowChill-2.png", penalty: 2000, weight: 20 },
-        { name: "eagle", flap1: "/assets/eagleChill-1.png", flap2: "/assets/eagleChill-2.png", penalty: 10000, weight: 10 },
+    const types = [
+        { name: "duck", flap1: "/assets/duckEnemy-1.png", flap2: "/assets/duckEnemy-2.png", weight: 70, speed: 10 },
+        { name: "crow", flap1: "/assets/crowChill-1.png", flap2: "/assets/crowChill-2.png", weight: 20, speed: 12 },
+        { name: "eagle", flap1: "/assets/eagleChill-1.png", flap2: "/assets/eagleChill-2.png", weight: 10, speed: 14 },
     ]
     const bird = {
         x: game.element.clientWidth,
@@ -108,8 +121,7 @@ const createBird = () => {
 
     }
     bird.element.bird = bird
-    console.log(bird.type.name)
-    bird.child.src = bird.flap1
+    bird.child.src = bird.type.flap1
     bird.child.classList.add("bird")
 
     bird.element.classList.add("birdBox")
@@ -127,7 +139,8 @@ const createBird = () => {
 
     bird.interval = setInterval(() => {
         bird.flap()
-        bird.x -= game.speed;
+        const speed = bird.type.speed + game.speed
+        bird.x -= speed;
         bird.element.style.left = bird.x + "px"
         if (bird.x < -window.innerWidth) {
             clearInterval(bird.interval)
@@ -141,21 +154,23 @@ const createBird = () => {
 
 const shot = (e) => {
     e.stopPropagation();
-    game.bullets--;
-    game.speed += 1
-
 
 
     const birdBox = e.currentTarget;
     const birdImg = birdBox.querySelector(".bird");
 
     birdImg.src = "/assets/duckEnemy-3.png";
-    const bird = birdBox.bird
-    if (bird.type.name !== "duck") {
-        const pen = bird.type.penalty
-        game.timer -= pen
-        timeSpan.textContent += ` - ${pen / 1000}s`
+    const bird = birdBox.bird;
+    if (bird.type.name === "crow") {
 
+        game.lives -= 2;
+        remainSpan.textContent += "- 2"
+        if (game.lives === 0) end()
+
+    }
+    else if (bird.type.name === "eagle") {
+        game.timer -= game.penalty
+        timeSpan.textContent += `- ${game.penalty / 1000}s`
     }
     else {
         game.score++;
@@ -168,8 +183,7 @@ const shot = (e) => {
         birdBox.remove();
     }, 200);
 
-    if (game.bullets === 0) {
-        game.isPlaying = false
+    if (game.lives === 0) {
         end()
     }
 }
@@ -186,26 +200,25 @@ const end = () => {
         resultSpan.textContent = "YOU LOST!"
 
     }
-    game.isPlaying = false
     overlayElement.classList.remove("hidden")
     UIElement.classList.add("hidden")
     clearInterval(renderId)
     clearInterval(createId)
+    clearInterval(speedId)
     game.birds.forEach((b) => clearInterval(b.interval))
 }
 
-
+const faster = () => game.speed += 3;
 
 
 
 /*----------- Event Listeners ----------*/
 game.element.addEventListener('click', (e) => {
     game.speed += 1
-    shotSmoke = document.createElement('img')
+    const shotSmoke = document.createElement('img')
     shotSmoke.src = "/assets/shot.png"
     shotSmoke.classList.add("shot")
-    game.bullets--;
-    if (game.bullets === 0) end()
+    if (game.lives === 0) end()
 
     shotSmoke.style.left = `${e.offsetX}px`;
     shotSmoke.style.top = `${e.offsetY}px`;
@@ -215,4 +228,14 @@ game.element.addEventListener('click', (e) => {
     }, 100)
 })
 
-playBtn.addEventListener('click', () => game.start())
+startBtn.addEventListener('click', () => {
+    game.start()
+})
+playBtn.addEventListener('click', () => {
+    if (game.played) {
+        game.start()
+    }
+    else {
+        openInfo()
+    }
+})
