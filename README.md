@@ -34,3 +34,6 @@ A simple browser-based Duck Hunt clone built with HTML, CSS, and JavaScript.
 
 ![alt text](Design.png)
 
+## Final Game
+[Duck Hunt](https://mohammed-m8.github.io/duck-hunt-browser-game/)
+
