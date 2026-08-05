@@ -21,7 +21,7 @@ body {
     width: 100vw;
     color: white;
     height: 100vh;
-    background: url("/assets/Home.png");
+    background: url("../assets/Home.png");
     background-position: top;
     background-repeat: repeat;
     background-size: 40px;
@@ -141,7 +141,7 @@ body {
     font-weight: 700;
     width: 100vw;
     height: 20vh;
-    background: url("/assets/statBoard.png");
+    background: url("../assets/statBoard.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -154,7 +154,7 @@ body {
     position: relative;
     width: 100vw;
     height: 80vh;
-    background: url("/assets/BG.png");
+    background: url("../assets/BG.png");
     border: 2px solid black;
     border-top: none;
     overflow: hidden;

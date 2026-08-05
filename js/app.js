@@ -3,9 +3,9 @@
 /*---------- Variables (state) ---------*/
 let renderId, createId, flapId, speedId;
 /*-------------- Constants -------------*/
-const shotSound = new Audio("/assets/Sounds/Shot.mp3")
-const winSound = new Audio("/assets/Sounds/Win.wav")
-const lossSound = new Audio("/assets/Sounds/Loss.wav")
+const shotSound = new Audio("../assets/Sounds/Shot.mp3")
+const winSound = new Audio("../assets/Sounds/Win.wav")
+const lossSound = new Audio("../assets/Sounds/Loss.wav")
 
 const render = () => {
     remainSpan.textContent = game.lives
@@ -98,9 +98,9 @@ const renderTimer = () => {
 }
 
 const types = [
-    { name: "duck", flap1: "./assets/duckEnemy-1.png", flap2: "./assets/duckEnemy-2.png", weight: 70, speed: 10 },
-    { name: "crow", flap1: "./assets/crowChill-1.png", flap2: "./assets/crowChill-2.png", weight: 20, speed: 12 },
-    { name: "eagle", flap1: "./assets/eagleChill-1.png", flap2: "./assets/eagleChill-2.png", weight: 10, speed: 14 },
+    { name: "duck", flap1: "../assets/duckEnemy-1.png", flap2: "../assets/duckEnemy-2.png", weight: 70, speed: 10 },
+    { name: "crow", flap1: "../assets/crowChill-1.png", flap2: "../assets/crowChill-2.png", weight: 20, speed: 12 },
+    { name: "eagle", flap1: "../assets/eagleChill-1.png", flap2: "../assets/eagleChill-2.png", weight: 10, speed: 14 },
 ]
 const createBird = () => {
 
@@ -164,7 +164,7 @@ const shot = (e) => {
     const birdBox = e.currentTarget;
     const birdImg = birdBox.querySelector(".bird");
 
-    birdImg.src = "./assets/duckEnemy-3.png";
+    birdImg.src = "../assets/duckEnemy-3.png";
 
     const bird = birdBox.bird;
 
@@ -238,7 +238,7 @@ game.element.addEventListener('click', (e) => {
     shotSound.currentTime = 0;
     shotSound.play()
     const shotSmoke = document.createElement('img')
-    shotSmoke.src = "./assets/shot.png"
+    shotSmoke.src = "../assets/shot.png"
     shotSmoke.classList.add("shot")
     if (game.lives === 0) end()
 
