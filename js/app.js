@@ -3,7 +3,9 @@
 /*---------- Variables (state) ---------*/
 let renderId, createId, flapId, speedId;
 /*-------------- Constants -------------*/
-
+const shotSound = new Audio("/assets/Sounds/Shot.mp3")
+const winSound = new Audio("/assets/Sounds/Win.wav")
+const lossSound = new Audio("/assets/Sounds/Loss.wav")
 
 const render = () => {
     remainSpan.textContent = game.lives
@@ -30,7 +32,7 @@ const game = {
         UIElement.classList.remove("hidden")
         infoElement.classList.add("hidden")
         this.timer = 60000
-        this.targetScore = 20
+        this.targetScore = 15
         this.score = 0
         this.speed = 0
         this.birds = []
@@ -94,12 +96,14 @@ const renderTimer = () => {
         end()
     }
 }
+
+const types = [
+    { name: "duck", flap1: "/assets/duckEnemy-1.png", flap2: "/assets/duckEnemy-2.png", weight: 70, speed: 10 },
+    { name: "crow", flap1: "/assets/crowChill-1.png", flap2: "/assets/crowChill-2.png", weight: 20, speed: 12 },
+    { name: "eagle", flap1: "/assets/eagleChill-1.png", flap2: "/assets/eagleChill-2.png", weight: 10, speed: 14 },
+]
 const createBird = () => {
-    const types = [
-        { name: "duck", flap1: "/assets/duckEnemy-1.png", flap2: "/assets/duckEnemy-2.png", weight: 70, speed: 10 },
-        { name: "crow", flap1: "/assets/crowChill-1.png", flap2: "/assets/crowChill-2.png", weight: 20, speed: 12 },
-        { name: "eagle", flap1: "/assets/eagleChill-1.png", flap2: "/assets/eagleChill-2.png", weight: 10, speed: 14 },
-    ]
+
     const bird = {
         x: game.element.clientWidth,
         y: Math.random() * (game.element.clientHeight - 90),
@@ -154,13 +158,28 @@ const createBird = () => {
 
 const shot = (e) => {
     e.stopPropagation();
-
+    shotSound.currentTime = 0;
+    shotSound.play()
 
     const birdBox = e.currentTarget;
     const birdImg = birdBox.querySelector(".bird");
 
     birdImg.src = "/assets/duckEnemy-3.png";
+
     const bird = birdBox.bird;
+
+    clearInterval(bird.interval)
+
+    const fall = setInterval(() => {
+        bird.y += 10
+        birdBox.style.top = bird.y + "px"
+    }, 30)
+
+    setTimeout(() => {
+        clearInterval(fall)
+        birdBox.remove()
+    }, 500)
+
     if (bird.type.name === "crow") {
 
         game.lives -= 2;
@@ -170,6 +189,7 @@ const shot = (e) => {
     }
     else if (bird.type.name === "eagle") {
         game.timer -= game.penalty
+        game.lives -= 1;
         timeSpan.textContent += `- ${game.penalty / 1000}s`
     }
     else {
@@ -179,9 +199,7 @@ const shot = (e) => {
     if (game.score === game.targetScore) end()
     console.log(game.score);
 
-    setTimeout(() => {
-        birdBox.remove();
-    }, 200);
+
 
     if (game.lives === 0) {
         end()
@@ -195,10 +213,13 @@ const end = () => {
     game.win = game.timer >= 0 && (game.targetScore === game.score)
     if (game.win) {
         resultSpan.textContent = "YOU WON!"
+        winSound.currentTime = 0;
+        winSound.play()
     }
     else {
         resultSpan.textContent = "YOU LOST!"
-
+        lossSound.currentTime = 0;
+        lossSound.play()
     }
     overlayElement.classList.remove("hidden")
     UIElement.classList.add("hidden")
@@ -214,7 +235,8 @@ const faster = () => game.speed += 3;
 
 /*----------- Event Listeners ----------*/
 game.element.addEventListener('click', (e) => {
-    game.speed += 1
+    shotSound.currentTime = 0;
+    shotSound.play()
     const shotSmoke = document.createElement('img')
     shotSmoke.src = "/assets/shot.png"
     shotSmoke.classList.add("shot")
