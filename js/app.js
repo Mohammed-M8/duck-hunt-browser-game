@@ -6,6 +6,12 @@ let renderId, createId, flapId, speedId;
 const shotSound = new Audio("./assets/Sounds/Shot.mp3")
 const winSound = new Audio("./assets/Sounds/Win.wav")
 const lossSound = new Audio("./assets/Sounds/Loss.wav")
+const introSound = new Audio("./assets/Sounds/Intro.wav")
+const duckSound = new Audio("./assets/Sounds/Duck.wav")
+duckSound.loop = true;
+duckSound.volume = 0.2;
+introSound.loop = true;
+introSound.volume = 0.2;
 
 const render = () => {
     remainSpan.textContent = game.lives
@@ -26,6 +32,10 @@ const game = {
     penalty: 10000,
     element: document.querySelector(".game"),
     start() {
+        stopIntro();
+        duckSound.volume = 0.04;
+        duckSound.play();
+
         if (this.played) {
             overlayElement.classList.add("hidden")
         }
@@ -65,6 +75,15 @@ const resultSpan = document.querySelector("#result")
 
 const infoElement = document.querySelector(".info")
 /*-------------- Functions -------------*/
+const startIntro = async () => {
+    introSound.currentTime = 0;
+    await introSound.play();
+}
+
+const stopIntro = () => {
+    introSound.pause();
+    introSound.currentTime = 0;
+}
 
 const openInfo = () => {
     overlayElement.classList.add("hidden")
@@ -207,6 +226,7 @@ const shot = (e) => {
 
 
 const end = () => {
+    duckSound.pause()
     game.win = game.timer >= 0 && (game.targetScore === game.score)
     if (game.win) {
         resultSpan.textContent = "YOU WON!"
@@ -227,7 +247,6 @@ const end = () => {
 }
 
 const faster = () => game.speed += 3;
-
 
 
 /*----------- Event Listeners ----------*/
@@ -255,6 +274,7 @@ playBtn.addEventListener('click', () => {
         game.start()
     }
     else {
+        startIntro()
         openInfo()
     }
 })
