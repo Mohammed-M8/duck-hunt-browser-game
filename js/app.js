@@ -7,9 +7,7 @@ const shotSound = new Audio("./assets/Sounds/Shot.mp3")
 const winSound = new Audio("./assets/Sounds/Win.wav")
 const lossSound = new Audio("./assets/Sounds/Loss.wav")
 const introSound = new Audio("./assets/Sounds/Intro.wav")
-const duckSound = new Audio("./assets/Sounds/Duck.wav")
-duckSound.loop = true;
-duckSound.volume = 0.2;
+const deathSound = new Audio("./assets/Sounds/Death.wav")
 introSound.loop = true;
 introSound.volume = 0.2;
 
@@ -33,8 +31,7 @@ const game = {
     element: document.querySelector(".game"),
     start() {
         stopIntro();
-        duckSound.volume = 0.04;
-        duckSound.play();
+
 
         if (this.played) {
             overlayElement.classList.add("hidden")
@@ -178,6 +175,8 @@ const shot = (e) => {
     e.stopPropagation();
     shotSound.currentTime = 0;
     shotSound.play()
+    deathSound.currentTime = 0;
+    deathSound.play()
 
     const birdBox = e.currentTarget;
     const birdImg = birdBox.querySelector(".bird");
