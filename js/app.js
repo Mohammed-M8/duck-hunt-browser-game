@@ -201,13 +201,18 @@ const shot = (e) => {
 
         game.lives -= 2;
         remainSpan.textContent += "- 2"
-        if (game.lives === 0) end()
+        if (game.lives <= 0) end()
 
     }
     else if (bird.type.name === "eagle") {
         game.timer -= game.penalty
         game.lives -= 1;
+
         timeSpan.textContent += `- ${game.penalty / 1000}s`
+        if (game.timer <= 0) {
+            end();
+            return;
+        }
     }
     else {
         game.score++;
@@ -217,7 +222,7 @@ const shot = (e) => {
 
 
 
-    if (game.lives === 0) {
+    if (game.lives <= 0) {
         end()
     }
 }
@@ -225,7 +230,6 @@ const shot = (e) => {
 
 
 const end = () => {
-    duckSound.pause()
     game.win = game.timer >= 0 && (game.targetScore === game.score)
     if (game.win) {
         resultSpan.textContent = "YOU WON!"
@@ -255,7 +259,7 @@ game.element.addEventListener('click', (e) => {
     const shotSmoke = document.createElement('img')
     shotSmoke.src = "./assets/shot.png"
     shotSmoke.classList.add("shot")
-    if (game.lives === 0) end()
+    if (game.lives <= 0) end()
 
     shotSmoke.style.left = `${e.offsetX}px`;
     shotSmoke.style.top = `${e.offsetY}px`;
