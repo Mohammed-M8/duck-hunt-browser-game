@@ -141,6 +141,7 @@ const createBird = () => {
     }
     bird.element.bird = bird
     bird.child.src = bird.type.flap1
+    bird.child.alt = bird.type.name
     bird.child.classList.add("bird")
 
     bird.element.classList.add("birdBox")
@@ -182,7 +183,7 @@ const shot = (e) => {
     const birdImg = birdBox.querySelector(".bird");
 
     birdImg.src = "./assets/duckEnemy-3.png";
-
+    birdImg.alt = `${bird.type.name} falling`;
     const bird = birdBox.bird;
 
     clearInterval(bird.interval)
@@ -258,6 +259,7 @@ game.element.addEventListener('click', (e) => {
     shotSound.play()
     const shotSmoke = document.createElement('img')
     shotSmoke.src = "./assets/shot.png"
+    shotSmoke.alt = ""
     shotSmoke.classList.add("shot")
     if (game.lives <= 0) end()
 
